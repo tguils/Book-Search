@@ -6,7 +6,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //class activity 25-Ins_Resolver-Context used for this page 
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
@@ -37,25 +37,24 @@ function App() {
   return (
     <ApolloProvider client={client}>
     <Router>
-      <>
-        <Navbar />
-        <Routes>
-          <Route  
-          path='/' 
-          element={<SearchBooks />} 
-          />
-          <Route  
-          path='/saved' 
-          component={<SavedBooks />}
-           />
-          <Route 
-          render={() => <h1 className='display-2'>Wrong page!</h1>} 
-          />
-        </Routes>
-      </>
+      <Navbar />
+      <Routes>
+        <Route 
+        path="/" 
+        element={<SearchBooks />}
+         />
+        <Route 
+        path="/saved"
+         element={<SavedBooks />} 
+         />
+        <Route 
+        path="*" 
+        element={<h1 className="display-2">Wrong page!</h1>} />
+      </Routes>
     </Router>
-    </ApolloProvider>
-  );
+  </ApolloProvider>
+);
+  
 }
 
 export default App;
