@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 //this will get teh information included in teh user's profile - their user detail variables, the book count , and the variable details of their saved books
 export const GET_ME = gql`
-    get me {
+    query me {
         me {
             _id
             username
