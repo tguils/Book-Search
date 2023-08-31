@@ -39,6 +39,7 @@ const LoginForm = () => {
         }
       );
       Auth.login(data.login.token);
+      console.log("this is the auth attempting to run login data.token", data.login.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
