@@ -1,21 +1,22 @@
 import React from 'react';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-//class activity 25-Ins_Resolver-Context used for this page 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
+// setup HttpLink which is the terminating link
+// with the endpoint of the GraphQL server as its uri
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
+// Call setContext() to prepare the authLink for the ApolloClient constructor.
+// Authlink will then be used for every request made by Apollo Client.
+// We pass in a function to let authLink 
+// (1) get the token from Local Storage, and
+// (2) put the token in the header 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('id_token');
@@ -28,42 +29,29 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// create a new ApolloClient instance and 
+// pass in the authLink and httpLink, and 
+// the cache object
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
+
+
 function App() {
   return (
-    <ApolloProvider 
-    client={client}
-    >
+    <ApolloProvider client={client}>
       <Router>
-        <Navbar />
-        <Switch>
-          <Route 
-          exact path="/" 
-          component={Home} />
-          <Route 
-          path="*" 
-          component={() => <h1 className="display-2">Wrong page!</h1>} 
-          />
-        </Switch>
+        <>
+          <Navbar />
+            <Route 
+              path='/' 
+              element={<SearchBooks />} 
+            />
+        </>
       </Router>
     </ApolloProvider>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <Route 
-      path="/search" 
-      component={SearchBooks} />
-      <Route 
-      path="/saved"
-       component={SavedBooks} />
-    </div>
   );
 }
 
