@@ -12,5 +12,6 @@ To run the Application on your local server, the user must first open a terminal
 The application is a search engine that a user can log in to. There is a "login" button on the top right where the user can create or sign in to their account. There is also a "Search For Books" button where the user can go to look up books of their interest in the search bar. When a user is logged in to the application, they will have the ability to save books to their favorites which they can view on their profile. 
 
  ![Alt text](./login.png)
+  ![Alt text](./searchpage.png)
 
  [Github Test URL](https://booksgalore-6552f1b04034.herokuapp.com/)
