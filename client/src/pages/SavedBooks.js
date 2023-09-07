@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+
 import {
   Jumbotron,
   Container,
@@ -10,10 +10,12 @@ import {
 
 } from 'react-bootstrap';
 
+//
+import { useQuery, useMutation } from '@apollo/client';
+import { removeBookId } from '../utils/localStorage';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
-import { removeBookId } from '../utils/localStorage';
 
 // SavedBooks.js:
 
@@ -27,6 +29,7 @@ import { removeBookId } from '../utils/localStorage';
 // https://www.apollographql.com/tutorials/lift-off-part3/08-the-usequery-hook-with-variables
 const SavedBooks = () => {
   const { data, loading } = useQuery(GET_ME);
+var userData = data?.me || {};
   const [removeBook] = useMutation(REMOVE_BOOK);
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -50,7 +53,7 @@ const SavedBooks = () => {
     return <h2>LOADING...</h2>;
   }
 
-  const userData = data.me;
+
 
   return (
     <>
